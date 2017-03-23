@@ -14,7 +14,7 @@
                 [2,2,2,2,1,1,2,2,2,2,2,2,2,2,1,1,2,2,2,1,1,2,2],
                 [2,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,2,2],
                 [2,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
-                [2,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
+                [2,"M",1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
                 [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
                 [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
                 [2,1,1,1,1,1,2,2,2,1,1,1,1,"D",1, 1,1,2,1,1,1,1,2],
@@ -37,19 +37,19 @@
 
         document.getElementById("canvasContainer").appendChild(renderer.domElement);
 
-        input = new Demonixis.Input();
-        cameraHelper = new Demonixis.GameHelper.CameraHelper(camera);
+        input = new Museum.Input();
+        cameraHelper = new Museum.GameHelper.CameraHelper(camera);
     }
 
     function initializeScene() {
-        miniMap = new Demonixis.Gui.MiniMap(map[0].length, map.length, "canvasContainer");
+        miniMap = new Museum.Gui.MiniMap(map[0].length, map.length, "canvasContainer");
         miniMap.create();
 
         var loader = new THREE.TextureLoader();
         var platformWidth = map[0].length * 300;
         var platformHeight = map.length * 300;
 
-        var floorGeometry = new THREE.BoxGeometry(platformWidth, 1, platformHeight);
+        var floorGeometry = new THREE.BoxGeometry(platformWidth, .1, platformHeight);
         var ground = new THREE.Mesh(floorGeometry, new THREE.MeshPhongMaterial({
             map: loader.load("assets/images/marmol.jpg"),
         }));
@@ -60,12 +60,12 @@
         scene.add(ground);
 
         var topMesh = new THREE.Mesh(floorGeometry, new THREE.MeshPhongMaterial({
-            map: loader.load("assets/images/techo.png")
+            map: loader.load("assets/images/roof.jpg")
         }));
 
         repeatTexture(topMesh.material.map, 16);
         //Size of the roof
-        topMesh.position.set(-50, 300, -50);
+        topMesh.position.set(-50, 200, -50);
         scene.add(topMesh);
 
         //Walls size
@@ -81,12 +81,24 @@
             z: 0 
         };
 
+        var mona = {
+            x: 50,
+            y: 50,
+            z: 0
+        };
+
         var wallGeometry = new THREE.BoxGeometry(size.x, size.y, size.z);
         var wallMaterial = new THREE.MeshPhongMaterial({
             map: loader.load("assets/images/pared.jpg")
         });
 
         repeatTexture(wallMaterial.map, 2);
+
+        var monaGeometry = new THREE.PlaneGeometry(mona.x, mona.y, mona.z);
+        var monaMaterial = new THREE.MeshPhongMaterial({
+            map: loader.load("assets/images/mona.jpg")
+        });
+
 
         // Map generation
         for (var y = 0, ly = map.length; y < ly; y++) {
@@ -118,6 +130,12 @@
                     cameraHelper.origin.position.mapX = x;
                     cameraHelper.origin.position.mapY = y;
                     cameraHelper.origin.position.mapZ = 0;
+                }
+
+                if (map[y][x] === "M") {
+                    var mona3D = new THREE.Mesh(monaGeometry, monaMaterial);
+                    mona3D.position.set(position.x, position.y, position.z);
+                    scene.add(mona3D);
                 }
 
                 miniMap.draw(x, y, map[y][x]);

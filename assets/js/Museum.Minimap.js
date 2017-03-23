@@ -1,7 +1,7 @@
-var Demonixis = window.Demonixis || {};
-Demonixis.Gui = Demonixis.Gui || {};
+var Museum = window.Museum || {};
+Museum.Gui = Museum.Gui || {};
 
-Demonixis.Gui.MiniMap = function(width, height, parent) {
+Museum.Gui.MiniMap = function(width, height, parent) {
     this.parent = parent;
     this.width = width;
     this.height = height;

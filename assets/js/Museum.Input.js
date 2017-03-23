@@ -1,7 +1,7 @@
 /** @namespace */
-var Demonixis = Demonixis || {};
+var Museum = Museum || {};
 
-Demonixis.Input = function() {
+Museum.Input = function() {
     this.keys = {
         up: false,
         down: false,
@@ -64,7 +64,7 @@ Demonixis.Input = function() {
     }
 };
 
-Demonixis.Input.prototype.destroy = function() {
+Museum.Input.prototype.destroy = function() {
     document.removeEventListener('keydown', this._onKeyboardDown, false);
     document.removeEventListener('keyup', this._onKeyboardUp, false);
 
@@ -76,7 +76,7 @@ Demonixis.Input.prototype.destroy = function() {
     }
 };
 
-Demonixis.Input.prototype._onKeyStateChange = function(event, pressed) {
+Museum.Input.prototype._onKeyStateChange = function(event, pressed) {
     event.preventDefault();
 
     switch (event.keyCode) {
@@ -95,7 +95,7 @@ Demonixis.Input.prototype._onKeyStateChange = function(event, pressed) {
     }
 };
 
-Demonixis.Input.prototype._onJoykeyStateChange = function(event, pressed) {
+Museum.Input.prototype._onJoykeyStateChange = function(event, pressed) {
     event.preventDefault();
     var id = event.currentTarget.id;
     switch (id) {
@@ -127,6 +127,6 @@ Demonixis.Input.prototype._onJoykeyStateChange = function(event, pressed) {
     }
 };
 
-Demonixis.Input.prototype.pressed = function(key) {
+Museum.Input.prototype.pressed = function(key) {
     return this.keys[key];
 };

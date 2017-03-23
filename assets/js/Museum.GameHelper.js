@@ -1,7 +1,7 @@
-var Demonixis = window.Demonixis || {};
-Demonixis.GameHelper = Demonixis.GameHelper || {};
+var Museum = window.Museum || {};
+Museum.GameHelper = Museum.GameHelper || {};
 
-Demonixis.GameHelper.CameraHelper = function(camera) {
+Museum.GameHelper.CameraHelper = function(camera) {
     this.translation = 5;
     this.rotation = 0.035;
     this.origin = {
